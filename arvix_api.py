@@ -31,8 +31,8 @@ for doc in docs:
   splitted_words.append(re.findall(r'\w+', summary_))
   splitted_phrases.append(summary_.split('.'))
 
-print(splitted_words)
-print(splitted_phrases)
+# print(splitted_words)
+# print(splitted_phrases)
 
 joined_phases = ' '.join([' '.join(x) for x in splitted_phrases])
-print(joined_phases)
+# print(joined_phases)
