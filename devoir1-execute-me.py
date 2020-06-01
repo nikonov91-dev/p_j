@@ -1,10 +1,10 @@
 # 1.1
-from reddit_api import request_and_parse_posts_from_reddit
-from arvix_api import request_and_parse_from_arxiv
+from api_services.arvix_api import request_and_parse_docs
 
-reddit_posts = request_and_parse_posts_from_reddit()
+#ici Comment ca march est claire.
+reddit_posts = request_and_parse_docs()
 
-arvix_posts = request_and_parse_from_arxiv()
+arvix_posts = request_and_parse_docs()
 
 print('reddit_posts')
 print(reddit_posts)
