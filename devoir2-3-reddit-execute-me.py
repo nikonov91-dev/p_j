@@ -22,6 +22,7 @@ del corpus
 # mais j'ai du charger le pickle enregistré à l'exterieur de la class sans creation de l'instance nouveaux
 
 corpus_revived = None
+print(' ---------------- revived corpus ------------------')
 with open('corpus.pickle', 'rb') as f:
   corpus_revived = pickle.load(f)
 print(corpus_revived.get_doc_list_of_number(4))

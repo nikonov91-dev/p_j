@@ -35,9 +35,11 @@ class Corpus():
     # 4.5 on utilise Set pour facilement eviter les doublons
     self.dictionary = set()
     # 4.4
-    self.concordancier = pd.DataFrame(columns=['word', 'contexte gauche', 'motif trouve', 'contexte droit'])
+    self.concordancier = pd.DataFrame(
+      columns=['word', 'contexte gauche', 'motif trouve', 'contexte droit'])
     # 4.3-4.6-4.7 on enregistre les mots occurance et le numbre d'occurrences
-    self.stats = pd.DataFrame(columns=['word', 'frequance_de_mot_par_tout', 'frequance_de_mot_par_docs'])
+    self.stats = pd.DataFrame(
+      columns=['word', 'frequance_de_mot_par_tout', 'frequance_de_mot_par_docs'])
     self.proceed_docs(parsed_docs)
 
   # Cette fonction est basique de Corpus pour initiate lui-meme
@@ -85,7 +87,8 @@ class Corpus():
     split_sentences = re.split(r' *[\.\?!][\'"\)\]]* *', raw_text)
     text_as_separate_words = []
     for s in split_sentences:
-      # on trouve tout les mots et chiffres par \w+ parceque la date est un chiffre et il peut etre une cle (p.e. 1789)
+      # on trouve tout les mots et chiffres par \w+
+      # parceque la date est un chiffre et il peut etre une cle (p.e. 1789)
       text_as_separate_words.append(re.findall(r'\w+', s))
     # les mots separe se reunissent dans sentence et en fin au text
     text = '. '.join([' '.join(x) for x in text_as_separate_words])
@@ -106,7 +109,8 @@ class Corpus():
         words_csv = self._search(w, genuine_text)
         self.concordancier.loc[len(self.concordancier)] = words_csv
 
-        # Pour conter le nombre de documents contenant chacun des mots et mot meme frequance
+        # Pour conter le nombre de documents contenant chacun des mots
+        # et mot meme frequance
         # on fait:
         # - inspect si le mot est deja au tableau
         # - et si on passe le meme sentance une fois plus
@@ -127,20 +131,27 @@ class Corpus():
 # 4.3
   def update_word_frequency_stats(self, word):
     frequance_par_tout = 'frequance_de_mot_par_tout'
-    self.stats.loc[(self.stats.word == word), frequance_par_tout] = self.stats.loc[(self.stats.word == word), frequance_par_tout].values[0] + 1
+    self.stats.loc[(self.stats.word == word), frequance_par_tout] \
+      = self.stats.loc[(self.stats.word == word), frequance_par_tout].values[0] + 1
 
 # 4.7
   def update_docs_frequency_stats(self, word):
     self.update_word_frequency_stats(word)
     frequance_par_docs = 'frequance_de_mot_par_docs'
-    self.stats.loc[(self.stats.word == word), frequance_par_docs] = self.stats.loc[(self.stats.word == word), frequance_par_docs].values[0] + 1
+    self.stats.loc[(self.stats.word == word), frequance_par_docs] \
+      = self.stats.loc[(self.stats.word == word), frequance_par_docs].values[0] + 1
+
+  def get_concordancier(self, n=10):
+    count = len(self.stats)
+    # avec le line subséquent on fait le pandas nous affiches tout tableu
+    return 'Total des mots: ' + str(count), self.concordancier[:n].to_string()
 
   # 4.3
   def get_stats(self, n=10):
     count = len(self.stats)
     # sorted = self.stats.sort_values(by=['frequance_de_mot_par_tout'])[:n]
     sorted = self.stats.sort_values(by=['frequance_de_mot_par_tout'], ascending=False)[:n]
-    return count, sorted
+    return 'Total des mots: ' + str(count), sorted
 
   def get_doc_list_of_number(self, n=10):
     docs = []

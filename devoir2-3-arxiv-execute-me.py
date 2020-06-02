@@ -8,10 +8,10 @@ corpus = Corpus('arvix', request_and_parse_docs())
 print(corpus.get_doc_list_of_number(2))
 
 # 3.3 New functionality testing from 3th part
-corpus.add_author_to_doc('AlexNikonov', 3)
-print(corpus.get_doc_by_id(3).get_authors())
+corpus.add_author_to_doc('AlexNikonov', 2)
+print(corpus.get_doc_by_id(2).get_authors())
 # uncommetez le line suivant et voyez l'exception personalisee
-# corpus.add_author_to_doc('AlexNikonov', 3)
+# corpus.add_author_to_doc('AlexNikonov', 2)
 
 # 2.9
 corpus.save()
